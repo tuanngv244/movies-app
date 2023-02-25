@@ -49,3 +49,5 @@ export { ReactComponent as EmailOutlineIcon } from './icons/email-outline-icon.s
 export { ReactComponent as WarningErrorIcon } from './icons/warning-error-icon.svg';
 export { ReactComponent as CallIcon } from './icons/call-icon.svg';
 export { ReactComponent as StarIcon } from './icons/star-icon.svg';
+export { ReactComponent as GridIcon } from './icons/grid-icon.svg';
+export { ReactComponent as ListIcon } from './icons/list-icon.svg';

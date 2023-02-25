@@ -15,10 +15,11 @@ import { StarIcon } from 'assets';
 import { useDevice } from 'hooks/useDevice';
 
 type CardFilmProps = {
+  layoutType?: 'list' | 'grid';
   initialData?: IMovieResult;
 };
 
-export const CardFilm: FC<CardFilmProps> = ({ initialData }) => {
+export const CardFilm: FC<CardFilmProps> = ({ initialData, layoutType }) => {
   const { title, overview, release_date, backdrop_path, vote_average, id } = initialData || {};
   const router = useRouter();
   const { mobile, tablet } = useDevice();
@@ -48,13 +49,17 @@ export const CardFilm: FC<CardFilmProps> = ({ initialData }) => {
           transition: 'all .25s',
           position: 'relative',
           zIndex: zIndex.lv3,
+          display: layoutType == 'list' ? 'flex' : 'block',
+          alignItems: 'flex-start',
         }}
       >
         <Box
           sx={{
             position: 'relative',
-            width: '100%',
+            width: layoutType == 'list' ? '150px' : '100%',
             height: '150px',
+            minWidth: layoutType == 'list' ? '150px' : '100%',
+            marginRight: layoutType == 'list' ? '15px' : '0',
             borderRadius: '4px',
             overflow: 'hidden',
             '&:hover': {
@@ -142,7 +147,6 @@ export const CardFilm: FC<CardFilmProps> = ({ initialData }) => {
               textOverflow: 'ellipsis',
               minHeight: '48px',
               fontSize: mobile || tablet ? '18px' : '24px',
-
               fontWeight: 700,
             }}
             variant="h3"

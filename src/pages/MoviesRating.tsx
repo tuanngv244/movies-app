@@ -2,6 +2,7 @@ import { Box, Grid } from '@mui/material';
 import { moviesApi } from 'apis/movies';
 import { LoadingSpinner } from 'components/atoms/LoadingSpinner';
 import { Typography } from 'components/atoms/Typography';
+import { ConfigLayout } from 'components/molecules/ConfigLayout';
 import { CardFilm } from 'components/organisms/CardFilm';
 import { useDebounceCallback } from 'hooks/useDebounceCallback';
 import { useToast } from 'hooks/useToast';
@@ -20,6 +21,7 @@ const MoviesRating: FC = () => {
   const hasSearchData = useSelector(hasSearchMovieDataSelector);
   const isLoadingSearch = useSelector(isLoadingSearchMovieSelector);
   const toast = useToast();
+  const [layoutType, setLayoutType] = useState<'list' | 'grid'>('grid');
   const [movies, setMovies] = useState<IMovie['results']>([]);
   const [loadMovies, setLoadMovies] = useState<boolean>();
   const [query, setQuery] = useState<{ page: number }>({
@@ -67,18 +69,16 @@ const MoviesRating: FC = () => {
   return (
     <React.Fragment>
       <Box sx={{ marginTop: '50px', marginBottom: '100px' }}>
-        <Grid
-          container
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: { xs: '1fr', sm: 'repeat(3,1fr)', md: 'repeat(4, 1fr)' },
-            gridRowGap: '16px',
-            gridColumnGap: '16px',
-          }}
+        <ConfigLayout
           id="grid-movie"
+          onChangeLayout={(type: 'list' | 'grid') => {
+            setLayoutType(type);
+          }}
         >
           {movieSearchData?.length > 0 &&
-            movieSearchData?.map((film, idx) => <CardFilm key={idx} initialData={film} />)}
+            movieSearchData?.map((film, idx) => (
+              <CardFilm layoutType={layoutType} key={idx} initialData={film} />
+            ))}
 
           {/* if has search data hide movies data from API current page and show search movies data  */}
           {/* if don't search data and search data = [] , show movies data of API this page */}
@@ -86,8 +86,10 @@ const MoviesRating: FC = () => {
             movies &&
             !hasSearchData &&
             movies?.length > 0 &&
-            movies?.map((film, idx) => <CardFilm key={idx} initialData={film} />)}
-        </Grid>
+            movies?.map((film, idx) => (
+              <CardFilm layoutType={layoutType} key={idx} initialData={film} />
+            ))}
+        </ConfigLayout>
 
         {loadMovies && movies?.length === 0 && (
           <Typography.Text
