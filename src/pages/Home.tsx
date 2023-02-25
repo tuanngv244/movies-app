@@ -92,7 +92,9 @@ const Home: FC = () => {
           }}
         >
           {movieSearchData?.length > 0 &&
-            movieSearchData?.map((film, idx) => <CardFilm key={idx} initialData={film} />)}
+            movieSearchData?.map((film, idx) => (
+              <CardFilm layoutType={layoutType} key={idx} initialData={film} />
+            ))}
 
           {/* if has search data hide movies data from API current page and show search movies data  */}
           {/* if don't search data and search data = [] , show movies data of API this page */}
