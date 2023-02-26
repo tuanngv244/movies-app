@@ -78,8 +78,6 @@ const MovieDetail: FC = () => {
     color: colors.white,
   };
 
-  console.log(movieCasts);
-
   useEffect(() => {
     if (+router?.params?.id !== detailData?.id) {
       reFetchDetailData(+router?.params?.id);
